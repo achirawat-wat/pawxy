@@ -20,8 +20,7 @@ Please ensure the sum of the 'durationMinutes' for all your subtasks is roughly 
 Keep the subtask titles concise (max 5-7 words), practical, and straightforward. Do not use overly grandiose, dramatic, or fictional language. Use actionable verbs (e.g. "Review", "Write", "Setup").
 ${goal ? `Context: The user's ultimate goal is "${goal}". Align the subtasks to this context if relevant, but keep it realistic.` : ''}
 
-CRITICAL RULES:
-1. STRICT LANGUAGE MATCHING: You MUST reply in the EXACT SAME LANGUAGE as the user's input. If the task title contains ANY Thai characters (e.g. "เรียนภาษาอังกฤษ"), your ENTIRE JSON response (including title, description, field labels, field options, and final subtasks) MUST be written in Thai language. DO NOT use English if the input has Thai.
+CRITICAL RULES: 1. STRICT LANGUAGE MATCHING: You MUST reply in the EXACT SAME LANGUAGE as the user's input. If the task title contains ANY Thai characters, your ENTIRE JSON response MUST be written in Thai. If the task title is entirely in English, your ENTIRE JSON response MUST be written in English. DO NOT mix languages.
 2. If the task title is highly vague or ambiguous (e.g. "develop web site", "design app", "เรียนภาษาอังกฤษ") AND no clarificationContext is provided, you MUST return a 'clarification_needed' response to understand the scope before generating subtasks. 
    - ADAPT THE FORM: You must generate a dynamic form (1-2 fields max).
    - If it's a Learning/Skill task: You MUST include a 'slider' field for their current proficiency level (1-10) and a 'text' field asking for their specific focus area.
