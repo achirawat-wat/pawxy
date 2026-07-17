@@ -1,0 +1,64 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   CatFace Design Tokens
+   Viewport: 160×160. Face centered at (80, 88).
+   ───────────────────────────────────────────────────────────────────────────── */
+
+:root {
+  /* ── Face anatomy colors (light theme) ── */
+  --cat-face-fill:        #f4f4f8;
+  --cat-face-rim:         rgba(140, 140, 170, 0.1);
+  --cat-ear-outer:        #d8d8e8;
+  --cat-ear-inner:        #f0b8ce;
+  --cat-iris:             #3e3e54;
+  --cat-iris-highlight:   #5c5c7a;
+  --cat-pupil:            #141422;
+  --cat-cheek:            #f8c4d0;
+  --cat-nose:             #c9879e;
+  --cat-whisker:          rgba(90, 90, 110, 0.35);
+  --cat-glow:             rgba(120, 120, 180, 0.22);
+
+  /* ── Sizing scale ── */
+  --cat-size-xs: 24px;
+  --cat-size-sm: 32px;
+  --cat-size-md: 48px;
+  --cat-size-lg: 64px;
+  --cat-size-xl: 128px;
+
+  /* ── Transition ── */
+  --cat-transition-fast: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  --cat-transition-slow: 600ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── Dark theme ── */
+[data-cat-theme='dark'],
+.cat-theme-dark {
+  --cat-face-fill:        #1e1e2e;
+  --cat-face-rim:         rgba(130, 130, 180, 0.1);
+  --cat-ear-outer:        #3a3a52;
+  --cat-ear-inner:        #8a5a74;
+  --cat-iris:             #8888b8;
+  --cat-iris-highlight:   #aaaace;
+  --cat-pupil:            #08080e;
+  --cat-cheek:            #a06080;
+  --cat-nose:             #c890ae;
+  --cat-whisker:          rgba(160, 160, 200, 0.3);
+  --cat-glow:             rgba(150, 150, 240, 0.2);
+}
+
+/* ── Auto: follows system ── */
+@media (prefers-color-scheme: dark) {
+  [data-cat-theme='auto'],
+  .cat-theme-auto {
+    --cat-face-fill:        #1e1e2e;
+    --cat-face-rim:         rgba(130, 130, 180, 0.1);
+    --cat-ear-outer:        #3a3a52;
+    --cat-ear-inner:        #8a5a74;
+    --cat-iris:             #8888b8;
+    --cat-iris-highlight:   #aaaace;
+    --cat-pupil:            #08080e;
+    --cat-cheek:            #a06080;
+    --cat-nose:             #c890ae;
+    --cat-whisker:          rgba(160, 160, 200, 0.3);
+    --cat-glow:             rgba(150, 150, 240, 0.2);
+  }
+}

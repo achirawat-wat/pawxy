@@ -1,0 +1,1737 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   CatFace Animation System — v2.0
+   Viewport: 160×160. Face at (80, 88).
+   All animations are pure CSS keyframes.
+   State classes are applied on the root <svg> element.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Base Transitions for smooth state changes */
+.cat-face-root,
+.cat-eyes-group,
+.cat-paw-left,
+.cat-paw-right,
+.cat-ear-left,
+.cat-ear-right,
+.cat-eye-left,
+.cat-eye-right {
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   KEYFRAMES — BLINK VARIANTS
+   All blink animations apply to .cat-eyes-group (scaleY, origin 80 86)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Natural single blink */
+@keyframes cat-blink {
+  0%, 82%    { transform: scaleY(1); }
+  86%        { transform: scaleY(0.07); }
+  91%        { transform: scaleY(1); }
+  100%       { transform: scaleY(1); }
+}
+
+/* Slower, lazier blink */
+@keyframes cat-blink-slow {
+  0%, 78%    { transform: scaleY(1); }
+  83%        { transform: scaleY(0.06); }
+  90%        { transform: scaleY(1); }
+  100%       { transform: scaleY(1); }
+}
+
+/* Drowsy half-close + reopen */
+@keyframes cat-blink-drowsy {
+  0%, 55%    { transform: scaleY(1); }
+  65%        { transform: scaleY(0.28); }
+  72%        { transform: scaleY(0.22); }
+  88%        { transform: scaleY(1); }
+  100%       { transform: scaleY(1); }
+}
+
+/* Thinking — asymmetric, left eye only squints */
+@keyframes cat-blink-think-left {
+  0%, 72%    { transform: scaleY(1); }
+  78%        { transform: scaleY(0.14); }
+  85%        { transform: scaleY(1); }
+  100%       { transform: scaleY(1); }
+}
+
+/* Alert double-blink (error / reminder) */
+@keyframes cat-blink-double {
+  0%         { transform: scaleY(1); }
+  6%         { transform: scaleY(0.05); }
+  12%        { transform: scaleY(1); }
+  20%        { transform: scaleY(0.05); }
+  26%        { transform: scaleY(1); }
+  100%       { transform: scaleY(1); }
+}
+
+/* Eyes fully close (sleep) — slow drowsy nodding blinks */
+@keyframes cat-sleep-close {
+  0%   { transform: scaleY(1); }
+  25%  { transform: scaleY(0.35); } /* Heavy eyelids, droop */
+  45%  { transform: scaleY(0.7); }  /* Struggle to open slightly */
+  70%  { transform: scaleY(0.18); } /* Heavy closed */
+  88%  { transform: scaleY(0.4); }  /* Tiny flutter */
+  100% { transform: scaleY(0); }    /* Deep sleep, fully closed */
+}
+
+/* Happy squint */
+@keyframes cat-eye-squint {
+  0%, 100%   { transform: scaleY(1); }
+  50%        { transform: scaleY(0.65); }
+}
+
+/* Widen — alert / reminder */
+@keyframes cat-eye-widen {
+  0%, 100%   { transform: scale(1); }
+  50%        { transform: scale(1.10, 1.08); }
+}
+
+/* Focused narrow — minimal vertical, contracted */
+@keyframes cat-eye-focus {
+  0%, 100%   { transform: scaleY(1); }
+  50%        { transform: scaleY(0.78); }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   KEYFRAMES — BODY / HEAD MOVEMENTS
+   Applied to .cat-face-root (origin: 80 88)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Gentle breathing */
+@keyframes cat-breathe {
+  0%, 100%   { transform: scale(1) translateY(0); }
+  50%        { transform: scale(1.014) translateY(-0.7px); }
+}
+
+/* Slightly deeper sleep breathe with neck tilt */
+@keyframes cat-breathe-sleep {
+  0%, 100%   { transform: scale(1) translateY(0) rotate(3deg); }
+  50%        { transform: scale(1.008) translateY(0.5px) rotate(3.5deg); }
+}
+
+/* Sleep bubble breath cycle (larger scale, never shrinks too small) */
+@keyframes cat-bubble-breath {
+  0%, 100% { transform: scale(0.7); opacity: 0.55; }
+  45%, 55% { transform: scale(2.2); opacity: 0.75; }
+}
+
+/* Soft idle float */
+@keyframes cat-float {
+  0%, 100%   { transform: translateY(0); }
+  50%        { transform: translateY(-2px); }
+}
+
+/* Micro bounce — success */
+@keyframes cat-bounce {
+  0%         { transform: translateY(0) scale(1); }
+  28%        { transform: translateY(-5px) scale(1.025, 0.982); }
+  52%        { transform: translateY(0) scale(0.988, 1.012); }
+  72%        { transform: translateY(-2px) scale(1.005, 0.998); }
+  100%       { transform: translateY(0) scale(1); }
+}
+
+/* Joyful celebration bounce — slightly bigger */
+@keyframes cat-bounce-joy {
+  0%         { transform: translateY(0) scale(1); }
+  25%        { transform: translateY(-7px) scale(1.03, 0.975); }
+  50%        { transform: translateY(0) scale(0.985, 1.016); }
+  70%        { transform: translateY(-3px) scale(1.01, 0.993); }
+  100%       { transform: translateY(0) scale(1); }
+}
+
+/* Head tilt — confused */
+@keyframes cat-tilt-left {
+  0%, 100%   { transform: rotate(0deg); }
+  18%        { transform: rotate(-8deg); }
+  82%        { transform: rotate(-8deg); }
+}
+
+/* Tiny nod — greeting / encouraging */
+@keyframes cat-nod {
+  0%, 100%   { transform: translateY(0) scale(1); }
+  25%        { transform: translateY(2.5px) scale(0.996, 1.004); }
+  50%        { transform: translateY(0); }
+  75%        { transform: translateY(1.5px) scale(0.998, 1.002); }
+}
+
+/* Syncing / loading gentle pulse */
+@keyframes cat-pulse {
+  0%, 100%   { transform: scale(1); }
+  50%        { transform: scale(1.025); }
+}
+
+/* Dim — offline */
+@keyframes cat-dim {
+  0%, 100%   { opacity: 1; }
+  50%        { opacity: 0.48; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   KEYFRAMES — EARS
+   Applied to .cat-ear-left / .cat-ear-right individually
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Right ear twitch */
+@keyframes cat-ear-right-twitch {
+  0%, 68%    { transform: rotate(0deg) translateY(0); }
+  73%        { transform: rotate(-5deg) translateY(-2px); }
+  80%        { transform: rotate(2deg) translateY(0.5px); }
+  86%        { transform: rotate(0deg) translateY(0); }
+  100%       { transform: rotate(0deg) translateY(0); }
+}
+
+/* Left ear twitch */
+@keyframes cat-ear-left-twitch {
+  0%, 68%    { transform: rotate(0deg) translateY(0); }
+  73%        { transform: rotate(5deg) translateY(-2px); }
+  80%        { transform: rotate(-2deg) translateY(0.5px); }
+  86%        { transform: rotate(0deg) translateY(0); }
+  100%       { transform: rotate(0deg) translateY(0); }
+}
+
+/* Both ears perk up together */
+@keyframes cat-ears-perk {
+  0%, 100%   { transform: translateY(0); }
+  50%        { transform: translateY(-2px); }
+}
+
+/* Celebration ear burst */
+@keyframes cat-ear-celebrate {
+  0%         { transform: translateY(0) rotate(0deg); }
+  18%        { transform: translateY(-4px) rotate(-6deg); }
+  36%        { transform: translateY(0) rotate(0deg); }
+  52%        { transform: translateY(-2.5px) rotate(-3.5deg); }
+  68%        { transform: translateY(0) rotate(0deg); }
+  100%       { transform: translateY(0) rotate(0deg); }
+}
+
+/* One ear droops — confused */
+@keyframes cat-ear-droop {
+  0%, 100%   { transform: rotate(0deg) translateY(0); }
+  20%        { transform: rotate(12deg) translateY(3px); }
+  80%        { transform: rotate(12deg) translateY(3px); }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   KEYFRAMES — PUPILS / GAZE
+   Applied to .cat-pupils-group (transformOrigin on each eye individually)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Side-to-side sweep — searching / planning */
+@keyframes cat-pupil-sweep {
+  0%         { transform: translateX(0); }
+  22%        { transform: translateX(-4px); }
+  50%        { transform: translateX(4px); }
+  78%        { transform: translateX(-2.5px); }
+  100%       { transform: translateX(0); }
+}
+
+/* Fast pupil scan — searching */
+@keyframes cat-pupil-scan {
+  0%         { transform: translateX(0); }
+  18%        { transform: translateX(-5px); }
+  36%        { transform: translateX(5px); }
+  54%        { transform: translateX(-3px); }
+  72%        { transform: translateX(4px); }
+  88%        { transform: translateX(0); }
+  100%       { transform: translateX(0); }
+}
+
+/* Reading track — left then reset */
+@keyframes cat-pupil-read {
+  0%         { transform: translateX(0) translateY(0); }
+  35%        { transform: translateX(-5px) translateY(1.5px); }
+  60%        { transform: translateX(-5px) translateY(1.5px); }
+  85%        { transform: translateX(0) translateY(0); }
+  100%       { transform: translateX(0) translateY(0); }
+}
+
+/* Downward — writing / typing */
+@keyframes cat-pupil-down {
+  0%, 100%   { transform: translateY(0); }
+  50%        { transform: translateY(2.5px); }
+}
+
+/* Upward — thinking */
+@keyframes cat-pupil-up {
+  0%, 100%   { transform: translateY(0); }
+  50%        { transform: translateY(-2px); }
+}
+
+/* Dilate — countdown urgency */
+@keyframes cat-pupil-dilate {
+  0%         { transform: scale(1); }
+  70%        { transform: scale(1.45); }
+  100%       { transform: scale(1.55); }
+}
+
+/* Contract — focus mode */
+@keyframes cat-pupil-contract {
+  0%, 100%   { transform: scale(1); }
+  50%        { transform: scale(0.68); }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   KEYFRAMES — FACE EFFECTS
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Soft glow pulse — reminder / glow states */
+@keyframes cat-glow-pulse {
+  0%, 100%   { filter: drop-shadow(0 0 0px transparent); }
+  50%        { filter: drop-shadow(0 0 8px var(--cat-glow, rgba(120,120,200,0.25))); }
+}
+
+/* Whisker flutter — writing / listening */
+@keyframes cat-whisker-flutter {
+  0%, 100%   { transform: rotate(0deg); }
+  28%        { transform: rotate(1.2deg); }
+  72%        { transform: rotate(-1deg); }
+}
+
+/* Sleep Z float upward */
+@keyframes cat-z-float {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) translateX(0px) scale(0.6);
+  }
+  20% {
+    opacity: 0.8;
+  }
+  50% {
+    transform: translateY(-20px) translateX(8px) scale(0.9);
+  }
+  80% {
+    opacity: 0.45;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-45px) translateX(-4px) scale(1.15);
+  }
+}
+
+/* Cheek blush pulse — happy / celebration */
+@keyframes cat-cheek-blush {
+  0%, 100%   { opacity: 0.5; }
+  50%        { opacity: 0.75; }
+}
+
+/* Waking keyframes */
+@keyframes cat-waking-head {
+  0% { transform: translateY(0) rotate(3deg); }
+  5% { transform: translateY(-12px) rotate(-4deg) scale(1.04); } /* Startle jump */
+  10% { transform: translateY(-8px) rotate(3deg) scale(1.02); }
+  15% { transform: translateY(-10px) rotate(-2deg) scale(1.03); }
+  20% { transform: translateY(-9px) rotate(0deg) scale(1.02); }
+  25% { transform: translateY(0) rotate(0deg); }
+  35%, 68% { transform: translateY(6px) rotate(2deg); } /* Eye-scratch dip */
+  80%, 100% { transform: translateY(0) rotate(0deg); }
+}
+
+@keyframes cat-waking-eye-left {
+  0% { transform: scaleY(0); } /* Closed curve active */
+  5%, 25% { transform: scaleY(1.3) scaleX(1.1); } /* Startled open wide */
+  35%, 100% { transform: scaleY(1); } /* Normal */
+}
+
+@keyframes cat-waking-eye-right {
+  0% { transform: scaleY(0); } /* Closed */
+  5%, 25% { transform: scaleY(1.3) scaleX(1.1); } /* Startled open wide */
+  35%, 68% { transform: scaleY(0) translateY(-2px); } /* Squint tight for scratch */
+  80%, 100% { transform: scaleY(1); } /* Normal */
+}
+
+@keyframes cat-waking-paw-right {
+  0%, 25% { transform: translate(0, 0) rotate(0deg); }
+  35%     { transform: translate(-50px, -92px) rotate(-15deg); } /* Lift right paw to eye */
+  40%     { transform: translate(-48px, -95px) rotate(-18deg); } /* Scratch wiggles */
+  45%     { transform: translate(-50px, -90px) rotate(-12deg); }
+  50%     { transform: translate(-48px, -95px) rotate(-18deg); }
+  55%     { transform: translate(-50px, -90px) rotate(-12deg); }
+  60%     { transform: translate(-48px, -95px) rotate(-18deg); }
+  68%     { transform: translate(-50px, -92px) rotate(-15deg); }
+  80%, 100% { transform: translate(0, 0) rotate(0deg); }
+}
+
+@keyframes cat-waking-bubble-pop {
+  0% { transform: scale(1.2); opacity: 1; }
+  6% { transform: scale(1.45); opacity: 1; }
+  10% { transform: scale(0); opacity: 0; }
+  100% { transform: scale(0); opacity: 0; }
+}
+
+@keyframes cat-waking-pop-lines {
+  0%, 8% { transform: scale(0.3); opacity: 0; }
+  10% { transform: scale(0.6); opacity: 1; }
+  25% { transform: scale(1.85); opacity: 0.95; }
+  45% { transform: scale(2.4); opacity: 0; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   KEYFRAMES — ADVANCED IDLE CHOREOGRAPHY (16s Cycle)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@keyframes cat-idle-head {
+  0%, 33%, 50%, 66.66%, 83.33%, 100% { transform: scale(1) translateY(0) rotate(0deg); }
+  
+  /* Very subtle breathing every ~2s between actions */
+  4.16%, 12.5%, 20.83%, 29.16%, 58.33%, 91.66% { transform: scale(1.005) translateY(-0.2px) rotate(0deg); }
+  
+  /* Right Eye Scratch Dip (9s - 12s) */
+  37.5%, 45.83% { transform: scale(1) translateY(6px) rotate(2deg); }
+  
+  /* Left Paw Lick Nod (17s - 19s) */
+  70.83% { transform: scale(1) translateY(3px) rotate(1.5deg); }
+  72.91% { transform: scale(1) translateY(-1px) rotate(-1deg); }
+  75%    { transform: scale(1) translateY(3px) rotate(1.5deg); }
+  77.08% { transform: scale(1) translateY(-1px) rotate(-1deg); }
+  79.16% { transform: scale(1) translateY(3px) rotate(1.5deg); }
+}
+
+@keyframes cat-idle-look {
+  0%, 2%     { transform: translateX(0); }
+  4.16%, 14.58% { transform: translateX(-8px); } /* Glance left */
+  16.66%, 27.08% { transform: translateX(8px); }  /* Glance right */
+  29.16%, 100% { transform: translateX(0); }
+}
+
+@keyframes cat-idle-paw-right {
+  0%, 33.33% { transform: translate(0, 0) rotate(0deg); }
+  37.5%      { transform: translate(-50px, -92px) rotate(-15deg); }
+  39.58%     { transform: translate(-48px, -95px) rotate(-18deg); }
+  41.66%     { transform: translate(-50px, -90px) rotate(-12deg); }
+  43.75%     { transform: translate(-48px, -95px) rotate(-18deg); }
+  45.83%     { transform: translate(-50px, -92px) rotate(-15deg); }
+  50%, 100%  { transform: translate(0, 0) rotate(0deg); }
+}
+
+@keyframes cat-idle-paw-left {
+  0%, 66.66%   { transform: translate(0, 0) rotate(0deg); }
+  70.83%       { transform: translate(100px, -55px) rotate(-120deg); }
+  72.91%       { transform: translate(98px, -53px) rotate(-123deg); }
+  75%          { transform: translate(100px, -55px) rotate(-120deg); }
+  77.08%       { transform: translate(98px, -53px) rotate(-123deg); }
+  79.16%       { transform: translate(100px, -55px) rotate(-120deg); }
+  83.33%, 100% { transform: translate(0, 0) rotate(0deg); }
+}
+
+@keyframes cat-idle-eye-left {
+  0%, 15%    { transform: scaleY(1); }
+  16.66%     { transform: scaleY(0.05); } /* Blink */
+  18%, 57%   { transform: scaleY(1); }
+  58.33%     { transform: scaleY(0.05); } /* Blink */
+  60%, 90%   { transform: scaleY(1); }
+  91.66%     { transform: scaleY(0.05); } /* Blink */
+  93%, 100%  { transform: scaleY(1); }
+}
+
+@keyframes cat-idle-eye-right {
+  0%, 15%    { transform: scaleY(1) translateY(0); }
+  16.66%     { transform: scaleY(0.05) translateY(0); } /* Blink */
+  18%, 33.33% { transform: scaleY(1) translateY(0); }
+  
+  /* Scratch */
+  37.5%, 45.83% { transform: scaleY(0) translateY(-2px); }
+  50%, 57%   { transform: scaleY(1) translateY(0); }
+  
+  58.33%     { transform: scaleY(0.05) translateY(0); } /* Blink */
+  60%, 90%   { transform: scaleY(1) translateY(0); }
+  91.66%     { transform: scaleY(0.05) translateY(0); } /* Blink */
+  93%, 100%  { transform: scaleY(1) translateY(0); }
+}
+
+@keyframes cat-idle-ear-right {
+  0%, 33.33% { transform: rotate(0deg) translateY(0); }
+  37.5%, 45.83% { transform: rotate(15deg) translateY(4px); }
+  50%, 100%  { transform: rotate(0deg) translateY(0); }
+}
+
+@keyframes cat-idle-ear-left {
+  0%, 66.66% { transform: rotate(0deg) translateY(0); }
+  70.83%, 79.16% { transform: rotate(-15deg) translateY(4px); }
+  83.33%, 100% { transform: rotate(0deg) translateY(0); }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   STATE CLASSES  (applied on root <svg> element)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── 1. IDLE ──────────────────────────────────────────────────────────────── */
+.cat-state-idle .cat-face-root {
+  animation: cat-idle-head 24s ease-in-out infinite;
+}
+.cat-state-idle .cat-eyes-group {
+  animation: cat-idle-look 24s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+.cat-state-idle .cat-paw-left {
+  animation: cat-idle-paw-left 24s ease-in-out infinite;
+}
+.cat-state-idle .cat-paw-right {
+  animation: cat-idle-paw-right 24s ease-in-out infinite;
+}
+.cat-state-idle .cat-eye-left {
+  animation: cat-idle-eye-left 24s ease-in-out infinite;
+}
+.cat-state-idle .cat-eye-right {
+  animation: cat-idle-eye-right 24s ease-in-out infinite;
+}
+.cat-state-idle .cat-ear-right {
+  animation: cat-idle-ear-right 24s ease-in-out infinite;
+}
+.cat-state-idle .cat-ear-left {
+  animation: cat-idle-ear-left 24s ease-in-out infinite;
+}
+
+/* ── 2. WAITING ───────────────────────────────────────────────────────────── */
+.cat-state-waiting .cat-face-root {
+  animation:
+    cat-breathe  6s ease-in-out infinite,
+    cat-float    10s ease-in-out infinite;
+}
+.cat-state-waiting .cat-eyes-group {
+  animation: cat-blink-slow 8s ease-in-out infinite;
+}
+.cat-state-waiting .cat-ear-right {
+  animation: cat-ear-right-twitch 9s ease-in-out infinite;
+}
+.cat-state-waiting .cat-pupils-group {
+  animation: cat-pupil-sweep 6s ease-in-out infinite;
+}
+
+/* ── 3. LISTENING ─────────────────────────────────────────────────────────── */
+.cat-state-listening .cat-face-root {
+  animation: cat-breathe 3.5s ease-in-out infinite;
+}
+.cat-state-listening .cat-eyes-group {
+  animation: cat-eye-widen 3s ease-in-out infinite;
+}
+.cat-state-listening .cat-ears-group {
+  animation: cat-ears-perk 3s ease-in-out infinite;
+}
+.cat-state-listening .cat-whiskers-group {
+  animation: cat-whisker-flutter 2s ease-in-out infinite;
+}
+.cat-state-listening .cat-cheeks-group {
+  animation: cat-cheek-blush 3s ease-in-out infinite;
+}
+
+/* Thinking state animations - Serious Contemplation (10s dynamic loop) */
+@keyframes cat-thinking-head {
+  0%, 100% { transform: translateY(0px) rotate(2deg); }
+  25%      { transform: translateY(-2px) rotate(-1deg); } 
+  50%      { transform: translateY(2px) rotate(3deg); }
+  75%      { transform: translateY(-1px) rotate(-2deg); }
+}
+
+@keyframes cat-thinking-eyes {
+  0%, 15%  { transform: translateY(-6px) translateX(-5px); }
+  18%, 35% { transform: translateY(-6px) translateX(5px); } 
+  38%, 55% { transform: translateY(-2px) translateX(7px); }
+  58%, 70% { transform: translateY(2px) translateX(-6px); } 
+  73%, 90% { transform: translateY(-4px) translateX(0px); }
+  95%, 100% { transform: translateY(-6px) translateX(-5px); }
+}
+
+@keyframes cat-thinking-paw-left {
+  /* Stroking the chin smoothly (lowered to avoid blocking face) */
+  0%, 100% { transform: translate(35px, -30px) rotate(-35deg); }
+  15%      { transform: translate(37px, -25px) rotate(-30deg); }
+  30%      { transform: translate(35px, -30px) rotate(-35deg); }
+  45%      { transform: translate(37px, -25px) rotate(-30deg); }
+  60%      { transform: translate(35px, -30px) rotate(-35deg); }
+  75%      { transform: translate(37px, -25px) rotate(-30deg); }
+  90%      { transform: translate(35px, -30px) rotate(-35deg); }
+}
+
+@keyframes cat-thinking-paw-right {
+  /* Rhythmic impatient/thinking tapping on table */
+  0%, 40% { transform: translate(0px, 11px) rotate(2deg); }
+  42% { transform: translate(0px, 5px) rotate(6deg); }
+  44% { transform: translate(0px, 11px) rotate(2deg); }
+  46% { transform: translate(0px, 5px) rotate(6deg); }
+  48% { transform: translate(0px, 11px) rotate(2deg); }
+  50% { transform: translate(0px, 5px) rotate(6deg); }
+  52%, 80% { transform: translate(0px, 11px) rotate(2deg); }
+  82% { transform: translate(0px, 5px) rotate(6deg); }
+  84% { transform: translate(0px, 11px) rotate(2deg); }
+  86% { transform: translate(0px, 5px) rotate(6deg); }
+  88%, 100% { transform: translate(0px, 11px) rotate(2deg); }
+}
+
+@keyframes cat-thinking-ear-left {
+  0%, 100% { transform: rotate(-12deg); }
+  40%      { transform: rotate(-12deg); }
+  42%      { transform: rotate(-16deg); } /* twitch */
+  44%      { transform: rotate(-12deg); }
+}
+
+@keyframes cat-thinking-ear-right {
+  0%, 100% { transform: rotate(12deg); }
+  80%      { transform: rotate(12deg); }
+  82%      { transform: rotate(16deg); } /* twitch */
+  84%      { transform: rotate(12deg); }
+}
+
+/* Lightbulb transition and animation for Aha! state */
+.cat-prop-bulb {
+  opacity: 0;
+  transform: translateY(15px) scale(0.6);
+  transition: opacity 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  pointer-events: none;
+}
+
+.cat-state-aha .cat-prop-bulb {
+  opacity: 1;
+  transform: translateY(0) scale(1.1);
+  animation: cat-bulb-glow 0.8s ease-in-out infinite alternate;
+}
+
+@keyframes cat-bulb-glow {
+  0%   { filter: drop-shadow(0 0 2px rgba(255, 224, 130, 0.3)); }
+  100% { filter: drop-shadow(0 0 12px rgba(255, 224, 130, 0.85)); }
+}
+
+/* Happy wiggles for ears in Aha! state (synced with 0.9s bounce) */
+@keyframes cat-aha-ear-wiggle-left {
+  0%, 100% { transform: rotate(0deg) translateY(0); }
+  25%      { transform: rotate(6deg) translateY(-1.5px); }
+  50%      { transform: rotate(-4deg) translateY(0.5px); }
+  75%      { transform: rotate(5deg) translateY(-1px); }
+}
+
+@keyframes cat-aha-ear-wiggle-right {
+  0%, 100% { transform: rotate(0deg) translateY(0); }
+  25%      { transform: rotate(-6deg) translateY(-1.5px); }
+  50%      { transform: rotate(4deg) translateY(0.5px); }
+  75%      { transform: rotate(-5deg) translateY(-1px); }
+}
+
+/* ── 4. THINKING ──────────────────────────────────────────────────────────── */
+.cat-state-thinking .cat-face-root {
+  animation: cat-thinking-head 10s ease-in-out infinite;
+}
+.cat-state-thinking .cat-eyes-group {
+  animation: cat-thinking-eyes 10s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+.cat-state-thinking .cat-paw-left {
+  animation: cat-thinking-paw-left 10s ease-in-out infinite;
+}
+.cat-state-thinking .cat-paw-right {
+  animation: cat-thinking-paw-right 10s ease-in-out infinite;
+}
+.cat-state-thinking .cat-ear-left {
+  animation: cat-thinking-ear-left 10s ease-in-out infinite;
+}
+.cat-state-thinking .cat-ear-right {
+  animation: cat-thinking-ear-right 10s ease-in-out infinite;
+}
+.cat-state-thinking .cat-eye-left {
+  transform: scaleY(0.7) rotate(8deg); /* Slanted inwards for serious focus */
+}
+.cat-state-thinking .cat-eye-right {
+  transform: scaleY(0.7) rotate(-8deg); /* Slanted inwards for serious focus */
+}
+
+/* ── 4b. AHA! (THINKING RESOLVED) ─────────────────────────────────────────── */
+.cat-state-aha .cat-face-root {
+  animation: cat-bounce-joy 0.9s cubic-bezier(0.34, 1.4, 0.64, 1) infinite;
+}
+.cat-state-aha .cat-eyes-group {
+  animation: cat-eye-squint 1.1s ease-in-out infinite;
+}
+.cat-state-aha .cat-cheeks-group {
+  animation: cat-cheek-blush 1s ease-in-out infinite;
+}
+.cat-state-aha .cat-ear-left {
+  animation: cat-aha-ear-wiggle-left 0.9s ease-in-out infinite;
+}
+.cat-state-aha .cat-ear-right {
+  animation: cat-aha-ear-wiggle-right 0.9s ease-in-out infinite 0.1s;
+}
+
+/* ── 5. FOCUSED (WORKING TOGETHER / FOCUS MODE) ───────────────────────────── */
+.cat-state-focused .cat-face-root {
+  animation: cat-focus-head 10s ease-in-out infinite;
+}
+.cat-state-focused .cat-eyes-group {
+  animation: cat-focus-eyes 10s ease-in-out infinite;
+}
+.cat-state-focused .cat-paw-left {
+  animation: cat-focus-paw-left 10s ease-in-out infinite;
+}
+.cat-state-focused .cat-paw-right {
+  animation: cat-focus-paw-right 10s ease-in-out infinite;
+}
+.cat-state-focused .cat-eye-left,
+.cat-state-focused .cat-eye-right {
+  animation: cat-blink-slow 6s ease-in-out infinite;
+}
+
+/* 10-Second Focus Work Loop Keyframes */
+@keyframes cat-focus-head {
+  /* 0s - 4.5s: Typing on Keyboard (looking down, head jiggles slightly) */
+  0%   { transform: translateY(8px) rotate(1deg) scale(0.995); }
+  11%  { transform: translateY(9.5px) rotate(0.6deg) scale(0.993); }
+  22%  { transform: translateY(8px) rotate(1.2deg) scale(0.995); }
+  33%  { transform: translateY(10px) rotate(0.8deg) scale(0.993); }
+  44%  { transform: translateY(8px) rotate(1deg) scale(0.995); }
+  
+  /* 4.5s - 5.0s: Turn left to look at notebook */
+  48%  { transform: translateY(8px) translateX(-6px) rotate(-3deg) scale(0.995); }
+  
+  /* 5.0s - 7.5s: Reading notebook while still typing (head turned left, jiggling) */
+  50%  { transform: translateY(8px) translateX(-6px) rotate(-3deg) scale(0.995); }
+  56%  { transform: translateY(9.5px) translateX(-5.5px) rotate(-2.5deg) scale(0.993); }
+  62%  { transform: translateY(8px) translateX(-6.5px) rotate(-3.2deg) scale(0.995); }
+  68%  { transform: translateY(10px) translateX(-5.5px) rotate(-2.7deg) scale(0.993); }
+  74%  { transform: translateY(8px) translateX(-6px) rotate(-3deg) scale(0.995); }
+  
+  /* 7.5s - 8.0s: Swivel back and rise to look at user */
+  79%  { transform: translateY(-3px) translateX(0px) rotate(0deg) scale(1); }
+  
+  /* 8.0s - 9.5s: Look at user & soft nod (no typing) */
+  80%  { transform: translateY(-3px) rotate(0deg) scale(1); }
+  85%  { transform: translateY(-3px) rotate(0deg) scale(1); }
+  89%  { transform: translateY(0.5px) rotate(0deg) scale(1.002); } /* soft nod */
+  93%  { transform: translateY(-3px) rotate(0deg) scale(1); }
+  95%  { transform: translateY(-3px) rotate(0deg) scale(1); }
+  
+  /* 9.5s - 10s: Settle back to keyboard */
+  100% { transform: translateY(8px) rotate(1deg) scale(0.995); }
+}
+
+@keyframes cat-focus-eyes {
+  /* 0s - 4.5s: Looking down at keyboard */
+  0%, 44%    { transform: translateY(6px) translateX(0px) scaleY(0.85); }
+  /* 4.5s - 7.5s: Looking down-left at notebook */
+  48%, 74%   { transform: translateY(6.5px) translateX(-8px) scaleY(0.85); }
+  /* 8.0s - 9.5s: Looking up at user */
+  79%, 95%   { transform: translateY(-6px) translateX(0px) scaleY(1); }
+  100%       { transform: translateY(6px) translateX(0px) scaleY(0.85); }
+}
+
+@keyframes cat-focus-paw-left {
+  /* 0s - 7.5s (0% - 75%): Fast typing (0.3s cycle - paws shifted inwards: translateX(38px)) */
+  0%, 3%, 6%, 9%, 12%, 15%, 18%, 21%, 24%, 27%, 30%, 33%, 36%, 39%, 42%, 45%, 48%, 51%, 54%, 57%, 60%, 63%, 66%, 69%, 72% { transform: translate(38px, 9.5px) rotate(-4deg); }
+  1.5%, 4.5%, 7.5%, 10.5%, 13.5%, 16.5%, 19.5%, 22.5%, 25.5%, 28.5%, 31.5%, 34.5%, 37.5%, 40.5%, 43.5%, 46.5%, 49.5%, 52.5%, 55.5%, 58.5%, 61.5%, 64.5%, 67.5%, 70.5%, 73.5% { transform: translate(38px, 14.5px) rotate(-1deg); }
+  75%                                                                                                                                                                    { transform: translate(38px, 9.5px); }
+  
+  /* 7.5s - 9.5s: Resting on table while looking at user */
+  79%, 95%                                                                                                                                                               { transform: translate(38px, 12px) scale(0.98); }
+  
+  /* 9.5s - 10s: Return to keyboard */
+  100%                                                                                                                                                                   { transform: translate(38px, 9.5px) rotate(-4deg); }
+}
+
+@keyframes cat-focus-paw-right {
+  /* 0s - 7.5s (0% - 75%): Fast typing (0.3s cycle - paws shifted inwards: translateX(-38px)) */
+  0%, 3%, 6%, 9%, 12%, 15%, 18%, 21%, 24%, 27%, 30%, 33%, 36%, 39%, 42%, 45%, 48%, 51%, 54%, 57%, 60%, 63%, 66%, 69%, 72% { transform: translate(-38px, 14.5px) rotate(1deg); }
+  1.5%, 4.5%, 7.5%, 10.5%, 13.5%, 16.5%, 19.5%, 22.5%, 25.5%, 28.5%, 31.5%, 34.5%, 37.5%, 40.5%, 43.5%, 46.5%, 49.5%, 52.5%, 55.5%, 58.5%, 61.5%, 64.5%, 67.5%, 70.5%, 73.5% { transform: translate(-38px, 9.5px) rotate(4deg); }
+  75%                                                                                                                                                                    { transform: translate(-38px, 14.5px); }
+  
+  /* 7.5s - 9.5s: Resting on table while looking at user */
+  79%, 95%                                                                                                                                                               { transform: translate(-38px, 12px) scale(0.98); }
+  
+  /* 9.5s - 10s: Return to keyboard */
+  100%                                                                                                                                                                   { transform: translate(-38px, 14.5px) rotate(1deg); }
+}
+
+/* ── 6. PLANNING ──────────────────────────────────────────────────────────── */
+.cat-state-planning .cat-face-root {
+  animation: cat-breathe 4s ease-in-out infinite;
+}
+.cat-state-planning .cat-eyes-group {
+  animation: cat-blink 6s ease-in-out infinite;
+}
+.cat-state-planning .cat-pupils-group {
+  animation: cat-pupil-sweep 2.8s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+}
+.cat-state-planning .cat-ear-left {
+  animation: cat-ear-left-twitch 7s ease-in-out infinite;
+}
+
+/* Props Transitions */
+.cat-prop-notebook,
+.cat-prop-pencil,
+.cat-prop-keyboard {
+  opacity: 0;
+  transform: translateY(23px) scale(0.95);
+  transition: opacity 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  pointer-events: none;
+}
+
+.cat-state-typing .cat-prop-notebook {
+  opacity: 1;
+  transform: translateY(8px) scale(1);
+}
+
+.cat-state-typing .cat-prop-pencil {
+  opacity: 1;
+  transform: translateY(8px) scale(1);
+}
+
+.cat-state-focused .cat-prop-keyboard {
+  opacity: 1;
+  transform: translateY(8px) scale(1);
+}
+
+.cat-state-focused .cat-prop-notebook {
+  opacity: 1;
+  transform: translate(-148px, 24px) scale(0.8) rotate(30deg); /* slanted 30deg, shifted further left & down */
+}
+
+/* Coffee cup: hidden by default, appears in break state */
+.cat-prop-coffee {
+  opacity: 0;
+  transform: translateY(20px) scale(0.9);
+  transition: opacity 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  pointer-events: none;
+}
+
+/* Thought bubble for Thinking state */
+.cat-prop-thought-bubble {
+  opacity: 0;
+  transform: translateY(15px) scale(0.6);
+  transition: opacity 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  pointer-events: none;
+}
+
+.cat-state-thinking .cat-prop-thought-bubble {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  animation: cat-thought-float 4s ease-in-out infinite;
+}
+
+@keyframes cat-thought-float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-4px); }
+}
+
+/* Trail bubbling */
+.cat-state-thinking .cat-thought-trail-1 {
+  animation: cat-thought-pulse 2s ease-in-out infinite 0s;
+}
+.cat-state-thinking .cat-thought-trail-2 {
+  animation: cat-thought-pulse 2s ease-in-out infinite 0.2s;
+}
+
+@keyframes cat-thought-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50%      { transform: scale(1.25); opacity: 1; }
+}
+
+/* Main cloud squish */
+.cat-state-thinking .cat-thought-cloud-group {
+  animation: cat-thought-cloud-squish 4s ease-in-out infinite;
+}
+
+@keyframes cat-thought-cloud-squish {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  25%      { transform: scale(1.02, 0.98) rotate(1deg); }
+  50%      { transform: scale(1) rotate(0deg); }
+  75%      { transform: scale(0.98, 1.02) rotate(-1deg); }
+}
+
+.cat-state-thinking .cat-thought-dot-1 { animation: cat-thought-dot 1.2s ease-in-out infinite 0s; }
+.cat-state-thinking .cat-thought-dot-2 { animation: cat-thought-dot 1.2s ease-in-out infinite 0.2s; }
+.cat-state-thinking .cat-thought-dot-3 { animation: cat-thought-dot 1.2s ease-in-out infinite 0.4s; }
+
+@keyframes cat-thought-dot {
+  0%, 100% { opacity: 0.4; transform: translateY(0); }
+  50%      { opacity: 1; transform: translateY(-5px); }
+}
+
+.cat-state-break .cat-prop-coffee {
+  opacity: 1;
+  transform: translateY(0px) scale(1);
+}
+
+/* Hide keyboard & notebook cleanly in break state */
+.cat-state-break .cat-prop-keyboard {
+  opacity: 0;
+  transform: translateY(20px) scale(0.92);
+}
+
+.cat-state-break .cat-prop-notebook {
+  opacity: 0;
+  transform: translate(-148px, 44px) scale(0.75) rotate(30deg);
+}
+
+/* Steam floating animation */
+@keyframes cat-coffee-steam {
+  0%, 100% { transform: translateY(0px) scaleX(1); opacity: 0.55; }
+  50%      { transform: translateY(-8px) scaleX(0.85); opacity: 0.25; }
+}
+
+.cat-state-break .cat-coffee-steam path:nth-child(1) {
+  animation: cat-coffee-steam 2.4s ease-in-out infinite;
+}
+.cat-state-break .cat-coffee-steam path:nth-child(2) {
+  animation: cat-coffee-steam 2.4s ease-in-out infinite 0.8s;
+}
+.cat-state-break .cat-coffee-steam path:nth-child(3) {
+  animation: cat-coffee-steam 2.4s ease-in-out infinite 1.6s;
+}
+
+@keyframes cat-break-cup-lift {
+  /* On table */
+  0%, 43%  { transform: translateY(0px) rotate(0deg); }
+  /* Lift to mouth (tipping slightly to drink) */
+  48%      { transform: translate(0px, -65px) rotate(3deg); }
+  58%      { transform: translate(0px, -68px) rotate(5deg); } /* sip */
+  68%      { transform: translate(0px, -65px) rotate(3deg); }
+  /* Back to table */
+  72%, 100% { transform: translateY(0px) rotate(0deg); }
+}
+
+.cat-state-break .cat-coffee-lift {
+  animation: cat-break-cup-lift 14s ease-in-out infinite;
+  transform-origin: 200px 390px;
+}
+
+/* ── 5b. BREAK (☕ COFFEE BREAK FROM FOCUS) ─────────────────────────────── */
+@keyframes cat-break-head {
+  /* Rest & sway */
+  0%, 10% { transform: translateY(2px) rotate(2deg) scale(1); }
+  /* Chin scratch phase - tilt head slightly into paw */
+  12%, 22% { transform: translateY(1px) rotate(5deg) scale(1); }
+  /* Look out window */
+  25%, 38% { transform: translateY(2px) rotate(1deg) scale(1); }
+  /* Look at cup */
+  40%, 43% { transform: translateY(4px) rotate(0deg) scale(1); }
+  /* Lift and sip - long sip! */
+  48% { transform: translateY(6px) rotate(-1deg) scale(0.998); }
+  58% { transform: translateY(8px) rotate(-2deg) scale(0.997); } /* deep sip */
+  68% { transform: translateY(6px) rotate(-1deg) scale(0.998); }
+  /* Release and gaze */
+  75%, 100% { transform: translateY(2px) rotate(2deg) scale(1); }
+}
+
+@keyframes cat-break-eyes {
+  0%, 10% { transform: translateY(2px) translateX(7px) scaleY(0.88); }
+  /* Chin scratch - happy squint */
+  12%, 22% { transform: translateY(1px) translateX(3px) scaleY(0.7); }
+  /* Gaze */
+  25%, 38% { transform: translateY(2px) translateX(7px) scaleY(0.88); }
+  /* Look at cup */
+  40%, 43% { transform: translateY(5px) translateX(0px) scaleY(0.95); }
+  /* Sip - closed/squint */
+  48%, 68% { transform: translateY(6px) translateX(-2px) scaleY(0.65); }
+  /* Back to gaze */
+  75%, 100% { transform: translateY(2px) translateX(7px) scaleY(0.88); }
+}
+
+@keyframes cat-break-paw-left {
+  /* Resting on table */
+  0%, 10%  { transform: translate(0px, 10px) rotate(0deg) scale(1); }
+  
+  /* Chin Scratch! */
+  12% { transform: translate(15px, -15px) rotate(-30deg) scale(0.95); }
+  14% { transform: translate(17px, -18px) rotate(-25deg) scale(0.95); } /* scratch up */
+  16% { transform: translate(15px, -15px) rotate(-30deg) scale(0.95); } /* down */
+  18% { transform: translate(17px, -18px) rotate(-25deg) scale(0.95); } /* up */
+  20% { transform: translate(15px, -15px) rotate(-30deg) scale(0.95); } /* down */
+  22% { transform: translate(15px, -15px) rotate(-30deg) scale(0.95); } /* hold */
+  
+  /* Back to rest and stay there during sip */
+  25%, 100% { transform: translate(0px, 10px) rotate(0deg) scale(1); } 
+}
+
+@keyframes cat-break-paw-right {
+  /* Resting gently on table */
+  0%, 38%  { transform: translate(0px, 11px) rotate(2deg) scale(1); }
+  /* Reach out to hold mug (bottom right corner) */
+  40%, 43% { transform: translate(-35px, 34px) rotate(10deg) scale(1); }
+  /* Lift with mug (right side) */
+  48%      { transform: translate(-37px, -31px) rotate(10deg) scale(0.95); }
+  58%      { transform: translate(-39px, -34px) rotate(12deg) scale(0.95); } /* sip */
+  68%      { transform: translate(-37px, -31px) rotate(10deg) scale(0.95); }
+  /* Back to table holding mug */
+  72%, 75% { transform: translate(-35px, 34px) rotate(10deg) scale(1); }
+  /* Lower back down to rest */
+  78%, 100% { transform: translate(0px, 11px) rotate(2deg) scale(1); }
+}
+
+/* Happy-squint for break: eyes slightly closed & curved */
+@keyframes cat-break-eye-squint {
+  0%, 10% { transform: scaleY(1); }
+  /* Chin scratch */
+  12%, 22% { transform: scaleY(0.4); } 
+  25%, 45% { transform: scaleY(1); }
+  /* Sip */
+  48%, 68% { transform: scaleY(0.6); }
+  75%, 100% { transform: scaleY(1); }
+}
+
+.cat-state-break .cat-face-root {
+  animation: cat-break-head 14s ease-in-out infinite;
+}
+.cat-state-break .cat-eyes-group {
+  animation: cat-break-eyes 14s ease-in-out infinite;
+}
+.cat-state-break .cat-paw-left {
+  animation: cat-break-paw-left 14s ease-in-out infinite;
+}
+.cat-state-break .cat-paw-right {
+  animation: cat-break-paw-right 14s ease-in-out infinite;
+}
+.cat-state-break .cat-eye-left,
+.cat-state-break .cat-eye-right {
+  animation: cat-break-eye-squint 14s ease-in-out infinite;
+}
+.cat-state-break .cat-cheeks-group {
+  animation: cat-cheek-blush 14s ease-in-out infinite;
+}
+
+/* Screen Glow Overlay (Focus Mode) */
+.cat-screen-glow {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
+.cat-state-focused .cat-screen-glow {
+  opacity: 1;
+  animation: cat-screen-flicker 10s ease-in-out infinite;
+}
+
+/* Remove back-glow behind head, keep cast light overlay only */
+.cat-state-focused .cat-face-root {
+  filter: none;
+}
+
+/* Screen glow off during break */
+.cat-state-break .cat-screen-glow {
+  opacity: 0;
+}
+
+@keyframes cat-screen-flicker {
+  /* Tab 1: IDE / Cyan Blue (0s - 5s) */
+  0%   { filter: hue-rotate(0deg); opacity: 0.88; }
+  15%  { filter: hue-rotate(0deg); opacity: 0.94; }
+  30%  { filter: hue-rotate(0deg); opacity: 0.82; }
+  49%  { filter: hue-rotate(0deg); opacity: 0.88; }
+  
+  /* Tab Switch! Shift to Purple (Terminal/Slack) at 5.0s */
+  50%  { filter: hue-rotate(60deg); opacity: 0.45; }
+  52%  { filter: hue-rotate(60deg); opacity: 0.88; }
+  60%  { filter: hue-rotate(60deg); opacity: 0.94; }
+  72%  { filter: hue-rotate(60deg); opacity: 0.80; }
+  84%  { filter: hue-rotate(60deg); opacity: 0.88; }
+  
+  /* Tab Switch! Back to Cyan Blue at 8.5s (when looking up at user) */
+  85%  { filter: hue-rotate(0deg); opacity: 0.45; }
+  87%  { filter: hue-rotate(0deg); opacity: 0.88; }
+  93%  { filter: hue-rotate(0deg); opacity: 0.94; }
+  100% { filter: hue-rotate(0deg); opacity: 0.88; }
+}
+
+/* Typing state animations */
+@keyframes cat-typing-head {
+  0%, 100% { transform: translateY(8px) rotate(1deg) scale(0.995); }
+  25%      { transform: translateY(9.5px) rotate(1.3deg) scale(0.993); }
+  50%      { transform: translateY(8px) rotate(0.7deg) scale(0.995); }
+  75%      { transform: translateY(10px) rotate(1.1deg) scale(0.993); }
+}
+
+@keyframes cat-typing-eyes {
+  0%, 100% { transform: translateY(6px) translateX(-2.5px) scaleY(0.85); }
+  50%      { transform: translateY(6.5px) translateX(2.5px) scaleY(0.85); }
+}
+
+@keyframes cat-typing-scribble {
+  0%, 100% { transform: translate(12px, 2px) rotate(3deg); }
+  15%      { transform: translate(16px, -1px) rotate(6deg); }
+  30%      { transform: translate(9px, 3px) rotate(1deg); }
+  45%      { transform: translate(17px, 1px) rotate(7deg); }
+  60%      { transform: translate(10px, -2px) rotate(2deg); }
+  75%      { transform: translate(15px, 3px) rotate(5deg); }
+  90%      { transform: translate(8px, 0px) rotate(0deg); }
+}
+
+@keyframes cat-typing-rest-paw {
+  0%, 100% { transform: translate(2px, 8px) scale(0.98); }
+  50%      { transform: translate(4px, 9.5px) scale(0.98); }
+}
+
+/* ── 7. TYPING ────────────────────────────────────────────────────────────── */
+.cat-state-typing .cat-face-root {
+  animation: cat-typing-head 1.2s ease-in-out infinite;
+}
+.cat-state-typing .cat-eyes-group {
+  animation: cat-typing-eyes 2.2s ease-in-out infinite;
+}
+.cat-state-typing .cat-paw-left {
+  animation: cat-typing-scribble 0.65s linear infinite;
+}
+.cat-state-typing .cat-paw-right {
+  animation: cat-typing-rest-paw 1.2s ease-in-out infinite;
+}
+.cat-state-typing .cat-eye-left,
+.cat-state-typing .cat-eye-right {
+  animation: cat-blink-slow 6s ease-in-out infinite;
+}
+
+/* ── 8. REMINDER ──────────────────────────────────────────────────────────── */
+.cat-state-reminder .cat-face-root {
+  animation:
+    cat-glow-pulse 2s ease-in-out infinite,
+    cat-bounce     0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 1 forwards;
+}
+.cat-state-reminder .cat-eyes-group {
+  animation: cat-blink-double 2.5s ease-in-out infinite 0.7s;
+}
+.cat-state-reminder .cat-ears-group {
+  animation: cat-ears-perk 2s ease-in-out infinite;
+}
+
+/* ── 9. COUNTDOWN ─────────────────────────────────────────────────────────── */
+.cat-state-countdown .cat-face-root {
+  animation:
+    cat-breathe   1.2s ease-in-out infinite,
+    cat-glow-pulse 1.4s ease-in-out infinite;
+}
+.cat-state-countdown .cat-eyes-group {
+  animation: cat-eye-widen 1.2s ease-in-out infinite;
+}
+.cat-state-countdown .cat-pupils-group {
+  animation: cat-pupil-dilate 3s ease-out forwards;
+}
+
+/* ── 10. SUCCESS ──────────────────────────────────────────────────────────── */
+.cat-state-success .cat-face-root {
+  animation: cat-bounce 0.65s cubic-bezier(0.34, 1.56, 0.64, 1) 1 forwards;
+}
+.cat-state-success .cat-eyes-group {
+  animation: cat-eye-squint 2s ease-in-out infinite 0.65s;
+}
+.cat-state-success .cat-cheeks-group {
+  animation: cat-cheek-blush 2s ease-in-out infinite;
+}
+
+/* ── 11. CELEBRATION ──────────────────────────────────────────────────────── */
+.cat-state-celebration .cat-face-root {
+  animation:
+    cat-bounce-joy  0.9s cubic-bezier(0.34, 1.4, 0.64, 1) infinite,
+    cat-glow-pulse  1.1s ease-in-out infinite;
+}
+.cat-state-celebration .cat-ear-left {
+  animation: cat-ear-celebrate 1.1s ease-in-out infinite;
+}
+.cat-state-celebration .cat-ear-right {
+  animation: cat-ear-celebrate 1.1s ease-in-out infinite 0.18s;
+}
+.cat-state-celebration .cat-eyes-group {
+  animation: cat-eye-squint 1.1s ease-in-out infinite;
+}
+.cat-state-celebration .cat-cheeks-group {
+  animation: cat-cheek-blush 1s ease-in-out infinite;
+}
+
+/* Default hidden states for sleeping/happy assets */
+.cat-sleep-lines,
+.cat-happy-lines {
+  opacity: 0;
+  transition: opacity 0.4s ease-out;
+  pointer-events: none;
+}
+
+.cat-z-group {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Make ZZZ glow slightly and be very readable */
+.cat-z-group text {
+  filter: drop-shadow(0 0 3px rgba(136, 136, 184, 0.6));
+}
+
+.cat-sleep-bubble {
+  opacity: 0;
+  transform: scale(0.1);
+  pointer-events: none;
+}
+
+.cat-bubble-pop-lines {
+  opacity: 0;
+  transform: scale(0.5);
+  pointer-events: none;
+}
+
+/* ── 12. SLEEPING ─────────────────────────────────────────────────────────── */
+.cat-state-sleeping .cat-face-root {
+  animation: cat-breathe-sleep 5s ease-in-out infinite; /* Slower breathing with neck tilt */
+}
+.cat-state-sleeping .cat-eyes-group {
+  animation: cat-sleep-close 1.8s ease-in-out forwards; /* Slow drowsy blinks nodding off */
+}
+.cat-state-sleeping .cat-sleep-lines {
+  animation: none;
+  opacity: 1;
+  /* shown after eyes close (at 1.8s) */
+  transition: opacity 0.5s ease 1.8s;
+}
+.cat-state-sleeping .cat-z-group {
+  animation: cat-z-float 3.5s ease-in-out infinite 2.2s; /* start after sleeping */
+}
+.cat-state-sleeping .cat-sleep-bubble {
+  animation: cat-bubble-breath 5s ease-in-out infinite 1.8s; /* start breathing after eyes close */
+}
+.cat-state-sleeping .cat-cheeks-group {
+  opacity: 0.35;
+}
+
+/* ── 12b. WAKING UP ────────────────────────────────────────────────────────── */
+.cat-state-waking .cat-face-root {
+  animation: cat-waking-head 3.5s ease-in-out forwards;
+}
+.cat-state-waking .cat-eyes-group {
+  transform: none; /* keep center */
+}
+.cat-state-waking .cat-eye-left {
+  animation: cat-waking-eye-left 3.5s ease-in-out forwards;
+}
+.cat-state-waking .cat-eye-right {
+  animation: cat-waking-eye-right 3.5s ease-in-out forwards;
+}
+.cat-state-waking .cat-paw-right {
+  animation: cat-waking-paw-right 3.5s ease-in-out forwards;
+}
+.cat-state-waking .cat-sleep-bubble {
+  animation: cat-waking-bubble-pop 0.4s ease-out forwards;
+}
+.cat-state-waking .cat-bubble-pop-lines {
+  animation: cat-waking-pop-lines 0.6s ease-out forwards;
+}
+.cat-state-waking .cat-sleep-lines {
+  opacity: 0;
+  transition: none; /* hide instantly */
+}
+
+/* ── 13. COFFEE-BREAK ─────────────────────────────────────────────────────── */
+.cat-state-coffee-break .cat-face-root {
+  animation:
+    cat-breathe 6s ease-in-out infinite,
+    cat-float   10s ease-in-out infinite;
+}
+.cat-state-coffee-break .cat-eyes-group {
+  animation: cat-blink-drowsy 6s ease-in-out infinite;
+}
+.cat-state-coffee-break .cat-ear-right {
+  animation: cat-ear-right-twitch 12s ease-in-out infinite;
+}
+
+/* ── 14. CONFUSED ─────────────────────────────────────────────────────────── */
+.cat-state-confused .cat-face-root {
+  animation: cat-tilt-left 3.5s ease-in-out infinite;
+}
+.cat-state-confused .cat-eyes-group {
+  animation: cat-blink 4.5s ease-in-out infinite;
+}
+.cat-state-confused .cat-eye-left {
+  animation: cat-eye-widen 3.5s ease-in-out infinite;
+}
+.cat-state-confused .cat-eye-right {
+  animation: cat-eye-focus 3.5s ease-in-out infinite;
+}
+.cat-state-confused .cat-ear-right {
+  animation: cat-ear-droop 3.5s ease-in-out infinite;
+}
+
+/* ── 15. SEARCHING ────────────────────────────────────────────────────────── */
+.cat-state-searching .cat-face-root {
+  animation: cat-breathe 3.5s ease-in-out infinite;
+}
+.cat-state-searching .cat-pupils-group {
+  transform: translate(var(--pupil-x, 0px), var(--pupil-y, 0px));
+  transition: transform 0.1s ease-out;
+}
+.cat-state-searching .cat-ear-left {
+  animation: cat-ear-left-twitch 2.2s ease-in-out infinite;
+}
+.cat-state-searching .cat-ear-right {
+  animation: cat-ear-right-twitch 2.2s ease-in-out infinite 0.35s;
+}
+.cat-state-searching .cat-eyes-group {
+  animation: cat-blink 4s ease-in-out infinite;
+}
+
+/* ── 16. READING ──────────────────────────────────────────────────────────── */
+.cat-state-reading .cat-face-root {
+  animation: cat-breathe 5s ease-in-out infinite;
+}
+.cat-state-reading .cat-pupils-group {
+  animation: cat-pupil-read 3s ease-in-out infinite;
+}
+.cat-state-reading .cat-eyes-group {
+  animation: cat-eye-focus 5s ease-in-out infinite;
+}
+
+/* ── 17. WRITING ──────────────────────────────────────────────────────────── */
+.cat-state-writing .cat-face-root {
+  animation: cat-breathe 4s ease-in-out infinite;
+}
+.cat-state-writing .cat-pupils-group {
+  animation: cat-pupil-down 2.2s ease-in-out infinite;
+}
+.cat-state-writing .cat-eyes-group {
+  animation: cat-eye-focus 3.5s ease-in-out infinite;
+}
+.cat-state-writing .cat-whiskers-group {
+  animation: cat-whisker-flutter 1.6s ease-in-out infinite;
+}
+
+/* ── 18. MEETING ──────────────────────────────────────────────────────────── */
+.cat-state-meeting .cat-face-root {
+  animation: cat-breathe 5s ease-in-out infinite;
+}
+.cat-state-meeting .cat-eyes-group {
+  animation: cat-blink-slow 7s ease-in-out infinite;
+}
+.cat-state-meeting .cat-ears-group {
+  animation: cat-ears-perk 5s ease-in-out infinite;
+}
+
+/* ── 19. LOADING ──────────────────────────────────────────────────────────── */
+.cat-state-loading .cat-face-root {
+  animation: cat-breathe 2.5s ease-in-out infinite;
+}
+.cat-state-loading .cat-pupils-group {
+  animation: cat-pupil-sweep 1.6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+.cat-state-loading .cat-eyes-group {
+  animation: cat-eye-focus 2.5s ease-in-out infinite;
+}
+.cat-state-loading .cat-face-root {
+  animation:
+    cat-breathe    2.5s ease-in-out infinite,
+    cat-glow-pulse 2.5s ease-in-out infinite;
+}
+
+/* ── 20. OFFLINE ──────────────────────────────────────────────────────────── */
+.cat-state-offline .cat-face-root {
+  animation:
+    cat-dim        4s ease-in-out infinite,
+    cat-breathe    7s ease-in-out infinite;
+}
+.cat-state-offline .cat-eyes-group {
+  animation: cat-blink-drowsy 7s ease-in-out infinite;
+}
+
+/* ── 21. ERROR ────────────────────────────────────────────────────────────── */
+.cat-state-error .cat-face-root {
+  animation: cat-breathe 3s ease-in-out infinite;
+}
+.cat-state-error .cat-eyes-group {
+  animation: cat-blink-double 3.5s ease-in-out infinite;
+}
+.cat-state-error .cat-ears-group {
+  animation: cat-ears-perk 2s ease-in-out infinite;
+}
+
+/* ── 22. HAPPY ────────────────────────────────────────────────────────────── */
+.cat-state-happy .cat-face-root {
+  animation:
+    cat-bounce   1.1s cubic-bezier(0.34, 1.4, 0.64, 1) 1 forwards,
+    cat-breathe  4s ease-in-out infinite 1.1s;
+}
+.cat-state-happy .cat-eyes-group {
+  animation: cat-eye-squint 3.5s ease-in-out infinite;
+}
+.cat-state-happy .cat-ear-left {
+  animation: cat-ear-left-twitch 3.5s ease-in-out infinite;
+}
+.cat-state-happy .cat-ear-right {
+  animation: cat-ear-right-twitch 3.5s ease-in-out infinite 0.4s;
+}
+.cat-state-happy .cat-cheeks-group {
+  animation: cat-cheek-blush 3s ease-in-out infinite;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   GREETING — added state for morning welcome
+   ═══════════════════════════════════════════════════════════════════════════ */
+.cat-state-greeting .cat-face-root {
+  animation: cat-nod 2.5s cubic-bezier(0.34, 1.2, 0.64, 1) 2;
+}
+.cat-state-greeting .cat-eyes-group {
+  animation: cat-eye-squint 3s ease-in-out infinite;
+}
+.cat-state-greeting .cat-cheeks-group {
+  animation: cat-cheek-blush 3s ease-in-out infinite;
+}
+.cat-state-greeting .cat-ear-left {
+  animation: cat-ear-left-twitch 3s ease-in-out infinite;
+}
+.cat-state-greeting .cat-ear-right {
+  animation: cat-ear-right-twitch 3s ease-in-out infinite 0.3s;
+}
+
+/* ── ENCOURAGING ──────────────────────────────────────────────────────────── */
+.cat-state-encouraging .cat-face-root {
+  animation: cat-nod 2.8s cubic-bezier(0.34, 1.2, 0.64, 1) 2;
+}
+.cat-state-encouraging .cat-eyes-group {
+  animation: cat-eye-squint 3s ease-in-out infinite;
+}
+.cat-state-encouraging .cat-cheeks-group {
+  animation: cat-cheek-blush 3s ease-in-out infinite;
+}
+
+/* ── SYNCING ──────────────────────────────────────────────────────────────── */
+.cat-state-syncing .cat-face-root {
+  animation:
+    cat-breathe    3s ease-in-out infinite,
+    cat-glow-pulse 3s ease-in-out infinite;
+}
+.cat-state-syncing .cat-eyes-group {
+  animation: cat-blink-slow 5s ease-in-out infinite;
+}
+.cat-state-syncing .cat-pupils-group {
+  animation: cat-pupil-sweep 2.8s ease-in-out infinite;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   WRAPPER UTILITY
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.catface-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transform-origin: center center;
+}
+
+.catface-wrapper svg {
+  display: block;
+  overflow: visible;
+}
+/* ============================================================ */
+/* 23. BREAK (COFFEE CUP ANIMATIONS)                           */
+/* ============================================================ */
+
+/* Coffee cup: hidden by default, appears in break state */
+.cat-prop-coffee {
+  opacity: 0;
+  transform: translateY(20px) scale(0.9);
+  transition: opacity 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  pointer-events: none;
+}
+
+.cat-state-break .cat-prop-coffee {
+  opacity: 1;
+  transform: translateY(0px) scale(1);
+}
+
+/* Steam floating animation */
+@keyframes cat-coffee-steam {
+  0%, 100% { transform: translateY(0px) scaleX(1); opacity: 0.55; }
+  50%      { transform: translateY(-8px) scaleX(0.85); opacity: 0.25; }
+}
+
+.cat-state-break .cat-coffee-steam path:nth-child(1) {
+  animation: cat-coffee-steam 2.4s ease-in-out infinite;
+}
+.cat-state-break .cat-coffee-steam path:nth-child(2) {
+  animation: cat-coffee-steam 2.4s ease-in-out infinite 0.8s;
+}
+.cat-state-break .cat-coffee-steam path:nth-child(3) {
+  animation: cat-coffee-steam 2.4s ease-in-out infinite 1.6s;
+}
+
+@keyframes cat-break-cup-lift {
+  /* On table */
+  0%, 43%  { transform: translateY(0px) rotate(0deg); }
+  /* Lift to mouth (tipping slightly to drink) */
+  48%      { transform: translate(0px, -65px) rotate(3deg); }
+  58%      { transform: translate(0px, -68px) rotate(5deg); } /* sip */
+  68%      { transform: translate(0px, -65px) rotate(3deg); }
+  /* Back to table */
+  72%, 100% { transform: translateY(0px) rotate(0deg); }
+}
+
+.cat-state-break .cat-coffee-lift {
+  animation: cat-break-cup-lift 14s ease-in-out infinite;
+  transform-origin: 200px 390px;
+}
+
+/* Face animations during break */
+@keyframes cat-break-head {
+  0%, 10% { transform: translateY(2px) rotate(2deg) scale(1); }
+  12%, 22% { transform: translateY(1px) rotate(5deg) scale(1); }
+  25%, 38% { transform: translateY(2px) rotate(1deg) scale(1); }
+  40%, 43% { transform: translateY(4px) rotate(0deg) scale(1); }
+  48% { transform: translateY(6px) rotate(-1deg) scale(0.998); }
+  58% { transform: translateY(8px) rotate(-2deg) scale(0.997); }
+  68% { transform: translateY(6px) rotate(-1deg) scale(0.998); }
+  75%, 100% { transform: translateY(2px) rotate(2deg) scale(1); }
+}
+
+@keyframes cat-break-eyes {
+  0%, 10% { transform: translateY(2px) translateX(7px) scaleY(0.88); }
+  12%, 22% { transform: translateY(1px) translateX(3px) scaleY(0.7); }
+  25%, 38% { transform: translateY(2px) translateX(7px) scaleY(0.88); }
+  40%, 43% { transform: translateY(5px) translateX(0px) scaleY(0.95); }
+  48%, 68% { transform: translateY(6px) translateX(-2px) scaleY(0.65); }
+  75%, 100% { transform: translateY(2px) translateX(7px) scaleY(0.88); }
+}
+
+.cat-state-break .cat-face-root {
+  animation: cat-break-head 14s ease-in-out infinite;
+}
+.cat-state-break .cat-eyes-group {
+  animation: cat-break-eyes 14s ease-in-out infinite;
+}
+.cat-state-break .cat-ear-left {
+  animation: cat-ear-left-twitch 14s ease-in-out infinite 0.2s;
+}
+.cat-state-break .cat-ear-right {
+  animation: cat-ear-right-twitch 14s ease-in-out infinite 0.5s;
+}
+
+/* Accessibility — reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  .cat-face-root,
+  .cat-ears-group,
+  .cat-ear-left,
+  .cat-ear-right,
+  .cat-eyes-group,
+  .cat-eye-left,
+  .cat-eye-right,
+  .cat-pupils-group,
+  .cat-whiskers-group,
+  .cat-cheeks-group,
+  .cat-z-group {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+/* ==========================================================================
+   10. CELEBRATION STATE
+   ========================================================================== */
+
+/* Face Root Jump */
+.cat-state-celebration .cat-face-root {
+  animation: cat-celebrate-jump 0.9s cubic-bezier(0.34, 1.4, 0.64, 1) infinite;
+}
+
+@keyframes cat-celebrate-jump {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+
+/* Clapping Paws */
+.cat-state-celebration .cat-paw-left {
+  animation: cat-clap-left 0.25s ease-in-out infinite alternate;
+}
+.cat-state-celebration .cat-paw-right {
+  animation: cat-clap-right 0.25s ease-in-out infinite alternate;
+}
+
+@keyframes cat-clap-left {
+  0% { transform: translate(25px, -5px) rotate(-15deg); }
+  100% { transform: translate(75px, -15px) rotate(-60deg); }
+}
+@keyframes cat-clap-right {
+  0% { transform: translate(-25px, -5px) rotate(15deg); }
+  100% { transform: translate(-75px, -15px) rotate(60deg); }
+}
+
+/* Confetti Props */
+.cat-prop-confetti {
+  opacity: 0;
+  pointer-events: none;
+}
+.cat-state-celebration .cat-prop-confetti {
+  opacity: 1;
+}
+
+.cat-star, .cat-confetti {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.cat-state-celebration .cat-star,
+.cat-state-celebration .cat-confetti {
+  animation: cat-confetti-pop 1.8s ease-out infinite;
+}
+
+.cat-state-celebration .cat-star-1 { animation-delay: 0s; }
+.cat-state-celebration .cat-confetti-1 { animation-delay: 0.1s; }
+.cat-state-celebration .cat-star-2 { animation-delay: 0.2s; }
+.cat-state-celebration .cat-confetti-2 { animation-delay: 0.3s; }
+.cat-state-celebration .cat-star-3 { animation-delay: 0.4s; }
+.cat-state-celebration .cat-confetti-3 { animation-delay: 0.5s; }
+.cat-state-celebration .cat-star-4 { animation-delay: 0.6s; }
+.cat-state-celebration .cat-confetti-4 { animation-delay: 0.7s; }
+.cat-state-celebration .cat-star-5 { animation-delay: 0.8s; }
+.cat-state-celebration .cat-confetti-5 { animation-delay: 0.9s; }
+
+@keyframes cat-confetti-pop {
+  0% { transform: translateY(30px) scale(0) rotate(0deg); opacity: 0; }
+  20% { opacity: 1; }
+  60% { transform: translateY(-40px) scale(1) rotate(180deg); opacity: 1; }
+  100% { transform: translateY(-20px) scale(0.5) rotate(360deg); opacity: 0; }
+}
+
+/* ==========================================================================
+   11. URGENT STATE (1 Min Remaining)
+   ========================================================================== */
+
+/* Show Stopwatch & Sweat */
+.cat-prop-stopwatch,
+.cat-prop-sweat {
+  opacity: 0;
+  pointer-events: none;
+}
+.cat-state-urgent .cat-prop-stopwatch {
+  opacity: 1;
+  animation: cat-stopwatch-tick 0.15s infinite alternate;
+}
+.cat-state-urgent .cat-prop-sweat {
+  opacity: 1;
+  animation: cat-sweat-wipe-combo 10s ease-in-out infinite;
+}
+
+@keyframes cat-stopwatch-tick {
+  0% { transform: rotate(-2deg); }
+  100% { transform: rotate(2deg); }
+}
+@keyframes cat-sweat-wipe-combo {
+  0%, 70% { transform: translateY(-5px); opacity: 0; }
+  73%, 78% { transform: translateY(0px); opacity: 1; }
+  82% { transform: translateY(5px); opacity: 1; } /* Hand reaches */
+  85%, 100% { transform: translateY(5px) scale(0.5); opacity: 0; } /* Wiped */
+}
+
+/* Stopwatch Hand Animation */
+.cat-state-urgent .cat-stopwatch-hand {
+  animation: cat-clock-spin 1s steps(4) infinite;
+}
+@keyframes cat-clock-spin {
+  100% { transform: rotate(360deg); }
+}
+
+/* Big Eyes & Shifty Eyes */
+.cat-state-urgent .cat-eyes-group {
+  transform: scale(1.15);
+  transform-origin: 200px 215px;
+  animation: cat-urgent-eyes 10s ease-in-out infinite;
+}
+@keyframes cat-urgent-eyes {
+  /* Intense Darting Left */
+  0%, 2%, 10%, 12%, 20%, 22%, 30%, 32%, 40%, 42%, 50%, 52%, 60%, 62%, 70%, 72% { transform: scale(1.15) translate(-6px, 0); }
+  /* Intense Darting Right */
+  5%, 7%, 15%, 17%, 25%, 27%, 35%, 37%, 45%, 47%, 55%, 57%, 65%, 67% { transform: scale(1.15) translate(6px, 0); }
+  /* Long gaze at clock */
+  76%, 93% { transform: scale(1.15) translate(10px, -6px); }
+  /* Return */
+  96%, 100% { transform: scale(1.15) translate(-6px, 0); }
+}
+
+/* Flattened Ears (Stressed) */
+.cat-state-urgent .cat-ear-left {
+  transform: rotate(-25deg);
+  transform-origin: 100px 150px;
+}
+.cat-state-urgent .cat-ear-right {
+  transform: rotate(25deg);
+  transform-origin: 300px 150px;
+}
+
+/* Tapping and Wiping Paws */
+.cat-state-urgent .cat-paw-left {
+  animation: cat-wipe-sweat-combo 10s ease-in-out infinite;
+}
+.cat-state-urgent .cat-paw-right {
+  /* Rotate clockwise, then shift slightly top-right */
+  transform-origin: 307px 314px !important;
+  transform: translate(30px, -15px) rotate(150deg);
+}
+
+@keyframes cat-wipe-sweat-combo {
+  /* Tapping */
+  0%, 4%, 8%, 12%, 16%, 20%, 24%, 28%, 32%, 36%, 40%, 44%, 48%, 52%, 56%, 60%, 64%, 68%, 72% { transform: translateY(0); }
+  2%, 6%, 10%, 14%, 18%, 22%, 26%, 30%, 34%, 38%, 42%, 46%, 50%, 54%, 58%, 62%, 66%, 70% { transform: translateY(-8px); }
+  /* Wiping */
+  76% { transform: translate(5px, -120px) rotate(-40deg); }
+  82% { transform: translate(45px, -170px) rotate(-70deg); }
+  88% { transform: translate(65px, -150px) rotate(-85deg); }
+  /* Return */
+  95%, 100% { transform: translateY(0); }
+}
+
+/* ==========================================================================
+   12. BRB STATE (AFK)
+   ========================================================================== */
+
+/* Show BRB Sign */
+.cat-prop-brb,
+.cat-prop-zzz {
+  opacity: 0;
+  pointer-events: none;
+}
+.cat-state-brb .cat-prop-brb {
+  opacity: 1;
+  animation: cat-brb-sign-float 6s ease-in-out infinite;
+}
+
+/* Sleepy Eyes (squish height to look closed) */
+.cat-state-brb .cat-eyes-group {
+  transform: scaleY(0.1);
+  transform-origin: 200px 215px;
+}
+
+/* Slow Breathing & Swaying Head */
+.cat-state-brb .cat-face-root {
+  transform-origin: 200px 300px;
+  animation: cat-brb-breathe-sway 6s ease-in-out infinite;
+}
+@keyframes cat-brb-breathe-sway {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(4px) rotate(1.5deg); } /* Breathes out and tilts head */
+}
+
+/* Sleepy Ear Droop */
+.cat-state-brb .cat-ear-left {
+  transform-origin: 100px 150px;
+  animation: cat-brb-ear-l 6s ease-in-out infinite;
+}
+.cat-state-brb .cat-ear-right {
+  transform-origin: 300px 150px;
+  animation: cat-brb-ear-r 6s ease-in-out infinite;
+}
+@keyframes cat-brb-ear-l {
+  0%, 100% { transform: rotate(-5deg); }
+  50% { transform: rotate(-15deg); } /* Droops more when breathing out */
+}
+@keyframes cat-brb-ear-r {
+  0%, 100% { transform: rotate(5deg); }
+  50% { transform: rotate(15deg); }
+}
+
+@keyframes cat-brb-sign-float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(6px) rotate(-1.5deg); } /* Tilts opposite to head */
+}
+
+/* Paws holding the sign */
+.cat-state-brb .cat-paw-left {
+  transform-origin: 92px 314px !important;
+  animation: cat-brb-paw-l 6s ease-in-out infinite;
+}
+.cat-state-brb .cat-paw-right {
+  transform-origin: 307px 314px !important;
+  animation: cat-brb-paw-r 6s ease-in-out infinite;
+}
+@keyframes cat-brb-paw-l {
+  0%, 100% { transform: translate(25px, -20px) rotate(-100deg); }
+  50% { transform: translate(25px, -14px) rotate(-102deg); } 
+}
+@keyframes cat-brb-paw-r {
+  0%, 100% { transform: translate(-25px, -20px) rotate(100deg); }
+  50% { transform: translate(-25px, -14px) rotate(98deg); }
+}
