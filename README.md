@@ -6,6 +6,9 @@ Instead of managing endless to-do lists, Pawxy combines intelligent task plannin
 
 By integrating generative AI with modern browser capabilities such as Document Picture-in-Picture, Pawxy creates a calm and distraction-free workflow that stays with users wherever they work.
 
+## 🌐 Live Demo
+
+https://pawxy.vercel.app
 ---
 
 # Overview
