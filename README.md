@@ -96,10 +96,6 @@ Rather than becoming another task management application, Pawxy acts as an **AI 
 
 * Gemini AI
 
-## Backend
-
-* Supabase
-* PostgreSQL
 
 ## Browser APIs
 
