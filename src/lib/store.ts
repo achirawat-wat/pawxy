@@ -204,8 +204,9 @@ export const useStore = create<AppState>()(
               const avgDiff = Math.round(diff / t.subtasks.length);
               
               let remainingDiff = diff;
-              const scaledSubtasks = t.subtasks.map((sub, index) => {
-                const isLast = index === t.subtasks.length - 1;
+              const currentSubtasks = t.subtasks; // Create local const to preserve type narrowing
+              const scaledSubtasks = currentSubtasks.map((sub, index) => {
+                const isLast = index === currentSubtasks.length - 1;
                 const intendedAdd = isLast ? remainingDiff : avgDiff;
                 
                 let newDuration = sub.durationMinutes + intendedAdd;
