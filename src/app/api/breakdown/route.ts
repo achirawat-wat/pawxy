@@ -84,7 +84,7 @@ CRITICAL RULES: 1. STRICT LANGUAGE MATCHING: You MUST reply in the EXACT SAME LA
       ? `Task: "${taskTitle}"\nClarification Context from user: "${clarificationContext}"\nPlease generate the subtasks now.`
       : `Break down this task: "${taskTitle}"`;
 
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=${apiKey}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -107,7 +107,14 @@ CRITICAL RULES: 1. STRICT LANGUAGE MATCHING: You MUST reply in the EXACT SAME LA
       })
     });
 
-    const data = await response.json();
+    const rawText = await response.text();
+    let data;
+    try {
+      data = JSON.parse(rawText);
+    } catch (e) {
+      console.error("API returned non-JSON response:", rawText.substring(0, 200));
+      return NextResponse.json({ error: `API returned an invalid response (Status ${response.status}). Check if the model name is correct.` }, { status: 500 });
+    }
 
     if (!response.ok) {
       console.error("Gemini API Error Response:", data);
