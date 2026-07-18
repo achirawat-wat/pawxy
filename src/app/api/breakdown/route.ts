@@ -84,7 +84,7 @@ CRITICAL RULES: 1. STRICT LANGUAGE MATCHING: You MUST reply in the EXACT SAME LA
       ? `Task: "${taskTitle}"\nClarification Context from user: "${clarificationContext}"\nPlease generate the subtasks now.`
       : `Break down this task: "${taskTitle}"`;
 
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=${apiKey}`, {
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
